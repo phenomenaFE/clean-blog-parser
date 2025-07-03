@@ -1,0 +1,20 @@
+{
+  "name": "clean-blog-parser",
+  "version": "1.0.0",
+  "description": "Extracts clean article content from any blog using Cloudflare Worker + jsdom + Readability.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "wrangler dev"
+  },
+  "author": "Hazem",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@mozilla/readability": "^0.4.4",
+    "htmlparser2": "^10.0.0",
+    "jsdom": "^24.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.45.0"
+  }
+}
