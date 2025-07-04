@@ -1,5 +1,5 @@
 {
-  "name": "clean-blog-parser",
+  "name": "scraper-blog-engine",
   "version": "1.0.0",
   "description": "Extracts clean article content from any blog using Cloudflare Worker + jsdom + Readability.",
   "main": "src/index.js",

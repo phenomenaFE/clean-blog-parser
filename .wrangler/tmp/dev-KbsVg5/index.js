@@ -5,7 +5,7 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// .wrangler/tmp/bundle-xSx0I3/checked-fetch.js
+// .wrangler/tmp/bundle-9nyM01/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -28,21 +28,6 @@ globalThis.fetch = new Proxy(globalThis.fetch, {
     const [request, init] = argArray;
     checkURL(request, init);
     return Reflect.apply(target, thisArg, argArray);
-  }
-});
-
-// .wrangler/tmp/bundle-xSx0I3/strip-cf-connecting-ip-header.js
-function stripCfConnectingIPHeader(input, init) {
-  const request = new Request(input, init);
-  request.headers.delete("CF-Connecting-IP");
-  return request;
-}
-__name(stripCfConnectingIPHeader, "stripCfConnectingIPHeader");
-globalThis.fetch = new Proxy(globalThis.fetch, {
-  apply(target, thisArg, argArray) {
-    return Reflect.apply(target, thisArg, [
-      stripCfConnectingIPHeader.apply(null, argArray)
-    ]);
   }
 });
 
@@ -167,6 +152,9 @@ var DecodingMode;
   DecodingMode3[DecodingMode3["Attribute"] = 2] = "Attribute";
 })(DecodingMode || (DecodingMode = {}));
 var EntityDecoder = class {
+  static {
+    __name(this, "EntityDecoder");
+  }
   constructor(decodeTree, emitCodePoint, errors) {
     this.decodeTree = decodeTree;
     this.emitCodePoint = emitCodePoint;
@@ -410,6 +398,7 @@ var EntityDecoder = class {
       case EntityDecoderState.NamedEntity: {
         return this.result !== 0 && (this.decodeMode !== DecodingMode.Attribute || this.result === this.treeIndex) ? this.emitNotTerminatedNamedEntity() : 0;
       }
+      // Otherwise, emit a numeric entity if we have one.
       case EntityDecoderState.NumericDecimal: {
         return this.emitNumericEntity(0, 2);
       }
@@ -426,7 +415,6 @@ var EntityDecoder = class {
     }
   }
 };
-__name(EntityDecoder, "EntityDecoder");
 function determineBranch(decodeTree, current, nodeIndex, char) {
   const branchCount = (current & BinTrieFlags.BRANCH_LENGTH) >> 7;
   const jumpOffset = current & BinTrieFlags.JUMP_TABLE;
@@ -563,6 +551,9 @@ var Sequences = {
   // `</xmp`
 };
 var Tokenizer = class {
+  static {
+    __name(this, "Tokenizer");
+  }
   constructor({ xmlMode = false, decodeEntities = true }, cbs) {
     this.cbs = cbs;
     this.state = State.Text;
@@ -1155,7 +1146,6 @@ var Tokenizer = class {
     }
   }
 };
-__name(Tokenizer, "Tokenizer");
 
 // node_modules/htmlparser2/dist/esm/Parser.js
 var formTags = /* @__PURE__ */ new Set([
@@ -1255,6 +1245,9 @@ var htmlIntegrationElements = /* @__PURE__ */ new Set([
 ]);
 var reNameEnd = /\s|\//;
 var Parser = class {
+  static {
+    __name(this, "Parser");
+  }
   constructor(cbs, options = {}) {
     var _a3, _b, _c, _d, _e, _f;
     this.options = options;
@@ -1604,7 +1597,6 @@ var Parser = class {
     this.end(chunk);
   }
 };
-__name(Parser, "Parser");
 
 // node_modules/domelementtype/lib/esm/index.js
 var ElementType;
@@ -1635,6 +1627,9 @@ var Doctype = ElementType.Doctype;
 
 // node_modules/domhandler/lib/esm/node.js
 var Node = class {
+  static {
+    __name(this, "Node");
+  }
   constructor() {
     this.parent = null;
     this.prev = null;
@@ -1683,8 +1678,10 @@ var Node = class {
     return cloneNode(this, recursive);
   }
 };
-__name(Node, "Node");
 var DataNode = class extends Node {
+  static {
+    __name(this, "DataNode");
+  }
   /**
    * @param data The content of the data node
    */
@@ -1703,8 +1700,10 @@ var DataNode = class extends Node {
     this.data = data;
   }
 };
-__name(DataNode, "DataNode");
 var Text2 = class extends DataNode {
+  static {
+    __name(this, "Text");
+  }
   constructor() {
     super(...arguments);
     this.type = ElementType.Text;
@@ -1713,8 +1712,10 @@ var Text2 = class extends DataNode {
     return 3;
   }
 };
-__name(Text2, "Text");
 var Comment2 = class extends DataNode {
+  static {
+    __name(this, "Comment");
+  }
   constructor() {
     super(...arguments);
     this.type = ElementType.Comment;
@@ -1723,8 +1724,10 @@ var Comment2 = class extends DataNode {
     return 8;
   }
 };
-__name(Comment2, "Comment");
 var ProcessingInstruction = class extends DataNode {
+  static {
+    __name(this, "ProcessingInstruction");
+  }
   constructor(name, data) {
     super(data);
     this.name = name;
@@ -1734,8 +1737,10 @@ var ProcessingInstruction = class extends DataNode {
     return 1;
   }
 };
-__name(ProcessingInstruction, "ProcessingInstruction");
 var NodeWithChildren = class extends Node {
+  static {
+    __name(this, "NodeWithChildren");
+  }
   /**
    * @param children Children of the node. Only certain node types can have children.
    */
@@ -1764,8 +1769,10 @@ var NodeWithChildren = class extends Node {
     this.children = children;
   }
 };
-__name(NodeWithChildren, "NodeWithChildren");
 var CDATA2 = class extends NodeWithChildren {
+  static {
+    __name(this, "CDATA");
+  }
   constructor() {
     super(...arguments);
     this.type = ElementType.CDATA;
@@ -1774,8 +1781,10 @@ var CDATA2 = class extends NodeWithChildren {
     return 4;
   }
 };
-__name(CDATA2, "CDATA");
 var Document = class extends NodeWithChildren {
+  static {
+    __name(this, "Document");
+  }
   constructor() {
     super(...arguments);
     this.type = ElementType.Root;
@@ -1784,8 +1793,10 @@ var Document = class extends NodeWithChildren {
     return 9;
   }
 };
-__name(Document, "Document");
 var Element = class extends NodeWithChildren {
+  static {
+    __name(this, "Element");
+  }
   /**
    * @param name Name of the tag, eg. `div`, `span`.
    * @param attribs Object mapping attribute names to attribute values.
@@ -1823,7 +1834,6 @@ var Element = class extends NodeWithChildren {
     });
   }
 };
-__name(Element, "Element");
 function isTag2(node) {
   return isTag(node);
 }
@@ -1921,6 +1931,9 @@ var defaultOpts = {
   xmlMode: false
 };
 var DomHandler = class {
+  static {
+    __name(this, "DomHandler");
+  }
   /**
    * @param callback Called once parsing has completed.
    * @param options Settings for the handler.
@@ -2047,7 +2060,6 @@ var DomHandler = class {
     this.lastNode = null;
   }
 };
-__name(DomHandler, "DomHandler");
 
 // node_modules/domutils/lib/esm/index.js
 var esm_exports2 = {};
@@ -2217,6 +2229,9 @@ var DecodingMode2;
   DecodingMode3[DecodingMode3["Attribute"] = 2] = "Attribute";
 })(DecodingMode2 || (DecodingMode2 = {}));
 var EntityDecoder2 = class {
+  static {
+    __name(this, "EntityDecoder");
+  }
   constructor(decodeTree, emitCodePoint, errors) {
     this.decodeTree = decodeTree;
     this.emitCodePoint = emitCodePoint;
@@ -2460,6 +2475,7 @@ var EntityDecoder2 = class {
       case EntityDecoderState2.NamedEntity: {
         return this.result !== 0 && (this.decodeMode !== DecodingMode2.Attribute || this.result === this.treeIndex) ? this.emitNotTerminatedNamedEntity() : 0;
       }
+      // Otherwise, emit a numeric entity if we have one.
       case EntityDecoderState2.NumericDecimal: {
         return this.emitNumericEntity(0, 2);
       }
@@ -2476,7 +2492,6 @@ var EntityDecoder2 = class {
     }
   }
 };
-__name(EntityDecoder2, "EntityDecoder");
 function getDecoder(decodeTree) {
   let ret = "";
   const decoder = new EntityDecoder2(decodeTree, (str) => ret += fromCodePoint2(str));
@@ -2792,6 +2807,7 @@ function renderNode(node, options) {
   switch (node.type) {
     case Root:
       return render(node.children, options);
+    // @ts-expect-error We don't use `Doctype` yet
     case Doctype:
     case Directive:
       return renderDirective(node);
@@ -3447,15 +3463,17 @@ function parseDocument(data, options) {
 __name(parseDocument, "parseDocument");
 
 // src/smartExtractor.js
-function extractSmartContent(html) {
+function extractSmartContent(html, options = {}) {
   const doc = parseDocument(html);
-  const blacklist = ["header", "footer", "nav", "aside", "form", "button", "script", "style", '[role*="dialog"]', "breadcrumbs_module"];
-  const blacklistClasses = ["nav", "footer", "header", "popup", "sidebar", "comments", "related", "newsletter", "speechify-ignore", "csol-breadcrumbs "];
+  const defaultTags = ["header", "footer", "nav", "aside", "form", "button", "script", "style", '[role*="dialog"]'];
+  const defaultClasses = ["nav", "footer", "header", "popup", "sidebar", "comments", "related", "newsletter", "speechify-ignore", "breadcrumbs", "csol-breadcrumbs"];
+  const tagBlacklist = /* @__PURE__ */ new Set([...options.tagBlacklist || [], ...defaultTags]);
+  const classBlacklist = [...options.classBlacklist || [], ...defaultClasses];
   const isBlacklisted = /* @__PURE__ */ __name((el) => {
     const name = el.name?.toLowerCase();
     const cls = el.attribs?.class?.toLowerCase() || "";
     const id = el.attribs?.id?.toLowerCase() || "";
-    return blacklist.includes(name) || blacklistClasses.some((b) => cls.includes(b)) || blacklistClasses.some((b) => id.includes(b));
+    return tagBlacklist.has(name) || classBlacklist.some((b) => cls.includes(b)) || classBlacklist.some((b) => id.includes(b));
   }, "isBlacklisted");
   const cleanTree = /* @__PURE__ */ __name((nodes) => {
     return nodes.filter((el) => !isBlacklisted(el)).map((el) => {
@@ -3466,28 +3484,39 @@ function extractSmartContent(html) {
     });
   }, "cleanTree");
   doc.children = cleanTree(doc.children);
-  const allDivs = esm_exports2.getElementsByTagName("div", doc, true);
-  let best = null;
-  let maxP = 0;
-  for (let el of allDivs) {
-    const pTags = esm_exports2.getElementsByTagName("p", el, true);
-    if (pTags.length > maxP) {
-      maxP = pTags.length;
-      best = el;
+  const candidates = [
+    ...esm_exports2.getElementsByTagName("article", doc, true),
+    ...esm_exports2.getElementsByTagName("div", doc, true)
+  ];
+  let bestNode = null;
+  let bestScore = 0;
+  for (const node of candidates) {
+    const score = scoreContentNode(node);
+    if (score > bestScore) {
+      bestScore = score;
+      bestNode = node;
     }
   }
-  if (best && maxP > 3) {
-    const text = esm_exports2.getText(best).trim();
-    if (text.length > 200)
-      return cleanText(text);
+  if (bestNode && bestScore > 20) {
+    const text = esm_exports2.getText(bestNode).trim();
+    if (text.length > 200) return cleanText(text);
   }
   const paragraphs = esm_exports2.find((el) => el.name === "p", doc.children, true);
   const joined = paragraphs.map((p) => esm_exports2.getText(p).trim()).join("\n\n");
   return cleanText(joined);
 }
 __name(extractSmartContent, "extractSmartContent");
+function scoreContentNode(node) {
+  const text = esm_exports2.getText(node).trim();
+  const pCount = esm_exports2.getElementsByTagName("p", node, true).length;
+  const tagCount = esm_exports2.getElementsByTagName("*", node, true).length;
+  if (!text || tagCount === 0) return 0;
+  const density = text.length / tagCount;
+  return density + pCount * 2;
+}
+__name(scoreContentNode, "scoreContentNode");
 function cleanText(text) {
-  return text.replace(/\n{2,}/g, "\n\n").replace(/\s{2,}/g, " ").trim();
+  return text.replace(/\n{2,}/g, "\n\n").replace(/\s{2,}/g, " ").replace(/&nbsp;/g, " ").trim();
 }
 __name(cleanText, "cleanText");
 
@@ -3497,7 +3526,10 @@ var src_default = {
     const url = new URL(request.url);
     const target = url.searchParams.get("url");
     if (!target) {
-      return new Response("Missing ?url param", { status: 400 });
+      return new Response(JSON.stringify({ error: "Missing ?url parameter" }), {
+        status: 400,
+        headers: corsHeaders()
+      });
     }
     try {
       const res = await fetch(target);
@@ -3511,10 +3543,13 @@ var src_default = {
         length: content.length,
         source: new URL(target).hostname
       }, null, 2), {
-        headers: { "Content-Type": "application/json" }
+        headers: corsHeaders()
       });
     } catch (e) {
-      return new Response("Failed to fetch or parse the page", { status: 500 });
+      return new Response(JSON.stringify({ error: "Failed to fetch or parse the page" }), {
+        status: 500,
+        headers: corsHeaders()
+      });
     }
   }
 };
@@ -3523,8 +3558,15 @@ function extractTitle(html) {
   return match ? match[1].trim() : "Untitled";
 }
 __name(extractTitle, "extractTitle");
+function corsHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  };
+}
+__name(corsHeaders, "corsHeaders");
 
-// node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
+// C:/Users/Hazem Hisham/AppData/Roaming/npm/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
 var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
@@ -3542,7 +3584,7 @@ var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
 
-// node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
+// C:/Users/Hazem Hisham/AppData/Roaming/npm/node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
 function reduceError(e) {
   return {
     name: e?.name,
@@ -3565,14 +3607,14 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-xSx0I3/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-9nyM01/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = src_default;
 
-// node_modules/wrangler/templates/middleware/common.ts
+// C:/Users/Hazem Hisham/AppData/Roaming/npm/node_modules/wrangler/templates/middleware/common.ts
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
   __facade_middleware__.push(...args.flat());
@@ -3597,22 +3639,24 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-xSx0I3/middleware-loader.entry.ts
-var __Facade_ScheduledController__ = class {
+// .wrangler/tmp/bundle-9nyM01/middleware-loader.entry.ts
+var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
     this.cron = cron;
     this.#noRetry = noRetry;
   }
+  static {
+    __name(this, "__Facade_ScheduledController__");
+  }
   #noRetry;
   noRetry() {
-    if (!(this instanceof __Facade_ScheduledController__)) {
+    if (!(this instanceof ___Facade_ScheduledController__)) {
       throw new TypeError("Illegal invocation");
     }
     this.#noRetry();
   }
 };
-__name(__Facade_ScheduledController__, "__Facade_ScheduledController__");
 function wrapExportedHandler(worker) {
   if (__INTERNAL_WRANGLER_MIDDLEWARE__ === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__.length === 0) {
     return worker;
@@ -3653,15 +3697,15 @@ function wrapWorkerEntrypoint(klass) {
     __facade_register__(middleware);
   }
   return class extends klass {
-    #fetchDispatcher = (request, env, ctx) => {
+    #fetchDispatcher = /* @__PURE__ */ __name((request, env, ctx) => {
       this.env = env;
       this.ctx = ctx;
       if (super.fetch === void 0) {
         throw new Error("Entrypoint class does not define a fetch() function.");
       }
       return super.fetch(request);
-    };
-    #dispatcher = (type, init) => {
+    }, "#fetchDispatcher");
+    #dispatcher = /* @__PURE__ */ __name((type, init) => {
       if (type === "scheduled" && super.scheduled !== void 0) {
         const controller = new __Facade_ScheduledController__(
           Date.now(),
@@ -3671,7 +3715,7 @@ function wrapWorkerEntrypoint(klass) {
         );
         return super.scheduled(controller);
       }
-    };
+    }, "#dispatcher");
     fetch(request) {
       return __facade_invoke__(
         request,

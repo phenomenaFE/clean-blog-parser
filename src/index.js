@@ -1,5 +1,4 @@
 import { extractSmartContent } from './smartExtractor';
-import { parseDocument } from "htmlparser2";
 
 export default {
   async fetch(request) {
@@ -7,7 +6,10 @@ export default {
     const target = url.searchParams.get("url");
 
     if (!target) {
-      return new Response("Missing ?url param", { status: 400 });
+      return new Response(JSON.stringify({ error: "Missing ?url parameter" }), {
+        status: 400,
+        headers: corsHeaders()
+      });
     }
 
     try {
@@ -23,15 +25,25 @@ export default {
         length: content.length,
         source: new URL(target).hostname
       }, null, 2), {
-        headers: { "Content-Type": "application/json" }
+        headers: corsHeaders()
       });
     } catch (e) {
-      return new Response("Failed to fetch or parse the page", { status: 500 });
+      return new Response(JSON.stringify({ error: "Failed to fetch or parse the page" }), {
+        status: 500,
+        headers: corsHeaders()
+      });
     }
   }
-}
+};
 
 function extractTitle(html) {
   const match = html.match(/<title>(.*?)<\/title>/i);
   return match ? match[1].trim() : "Untitled";
+}
+
+function corsHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  };
 }
